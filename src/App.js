@@ -34,7 +34,7 @@ function App() {
         <div className="form-control">
           <label>Zip:</label>
           <input
-            type="text"
+            type="number"
             placeholder="zip"
             value={zip}
             onChange={(e) => setZip(e.target.value)}
