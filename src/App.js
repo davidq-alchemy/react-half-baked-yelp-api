@@ -5,18 +5,9 @@ import { fetchBusinesses } from './services/yelp';
 
 function App() {
   const [businesses, setBusinesses] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [zip, setZip] = useState('');
   const [query, setQuery] = useState('');
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await fetchBusinesses();
-      setBusinesses(data);
-      setLoading(false);
-    };
-    fetchData();
-  }, []);
 
   function handleSearch() {
     setLoading(true);
@@ -24,9 +15,14 @@ function App() {
       .then(data => {
         setBusinesses(data);
         setLoading(false);
+      })
+      .catch(error => {
+        setBusinesses([]);
+        setLoading(false);
       });
   }
 
+  const hasResults = businesses.length > 0;
   return (
     <div className="App">
       <h1>Alchemy Restaurant Finder</h1>
@@ -52,7 +48,8 @@ function App() {
         <button onClick={handleSearch}>Search</button>
       </div>
       {loading && <div className="loader"></div>}
-      {!loading && businesses.map((b) => <RestaurantListItem key={b.id} {...b} />)}
+      {!loading && hasResults && businesses.map((b) => <RestaurantListItem key={b.id} {...b} />)}
+      {!loading && !hasResults && <div className='message'>No Results</div>}
     </div>
   );
 }
