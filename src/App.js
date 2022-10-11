@@ -34,6 +34,7 @@ function App() {
             placeholder="zip"
             value={zip}
             onChange={(e) => setZip(e.target.value)}
+            onKeyUp={e => e.code === 'Enter' && handleSearch()}
           />
         </div>
         <div className="form-control">
@@ -43,6 +44,7 @@ function App() {
             placeholder="Search..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            onKeyUp={e => e.code === 'Enter' && handleSearch()}
           />
         </div>
         <button onClick={handleSearch}>Search</button>
